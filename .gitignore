@@ -336,4 +336,5 @@ helpdesk/media/
 !.envs/.local/
 
 
+.envs/.local/.dev
 envs.sh
