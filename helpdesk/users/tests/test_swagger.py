@@ -1,21 +1,27 @@
-import pytest
 from django.urls import reverse
 
 
-def test_swagger_accessible_by_admin(admin_client):
-    url = reverse("api-docs")
-    response = admin_client.get(url)
-    assert response.status_code == 200
+class TestSwagger:
+    def test_swagger_accessible_by_admin(self, api_client, authenticate):
+        authenticate(is_staff=True)
 
+        url = reverse("api-docs")
+        response = api_client.get(url)
 
-@pytest.mark.django_db
-def test_swagger_ui_not_accessible_by_normal_user(client):
-    url = reverse("api-docs")
-    response = client.get(url)
-    assert response.status_code == 403
+        assert response.status_code == 200
 
+    def test_swagger_ui_not_accessible_by_normal_user(self, api_client, authenticate):
+        authenticate(is_staff=False)
 
-def test_api_schema_generated_successfully(admin_client):
-    url = reverse("api-schema")
-    response = admin_client.get(url)
-    assert response.status_code == 200
+        url = reverse("api-docs")
+        response = api_client.get(url)
+
+        assert response.status_code == 403
+
+    def test_api_schema_generated_successfully(self, api_client, authenticate):
+        authenticate(is_staff=True)
+
+        url = reverse("api-schema")
+        response = api_client.get(url)
+
+        assert response.status_code == 200
