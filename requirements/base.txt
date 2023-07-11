@@ -24,6 +24,6 @@ drf-spectacular==0.26.3  # https://github.com/tfranzel/drf-spectacular
 djoser == 2.2.0 # https://github.com/sunscrapers/djoser
 djangorestframework_simplejwt == 5.2.2 # https://github.com/jazzband/djangorestframework-simplejwt
 social-auth-app-django == 5.2.0 #https://github.com/python-social-auth/social-app-django
-drf-nested-routers == 0.90.0 # https://github.com/alanjds/drf-nested-routers
+drf-nested-routers == 0.93.4 # https://github.com/alanjds/drf-nested-routers
 # Django Filter
 django-filter==23.2  #https://github.com/carltongibson/django-filter
