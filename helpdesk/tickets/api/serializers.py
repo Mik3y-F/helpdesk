@@ -79,6 +79,7 @@ class TicketSerializer(serializers.ModelSerializer):
             "assigned_to",
             "ticket_number",
             "priority",
+            "due_date",
             "created_at",
             "updated_at",
         ]

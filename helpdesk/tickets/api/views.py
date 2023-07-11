@@ -1,6 +1,9 @@
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from ..models import Ticket, TicketStatus
+from .pagination import DefaultPagination
 from .serializers import TicketSerializer, TicketStatusSerializer
 
 
@@ -11,6 +14,16 @@ class TicketViewSet(ModelViewSet):
 
     serializer_class = TicketSerializer
     queryset = Ticket.objects.prefetch_related("statuses").all()
+    pagination_class = DefaultPagination
+
+    @action(detail=False, methods=["GET"])
+    def summary(self, request):
+        """
+        Get a summary of all tickets
+        """
+        ticket_summary = Ticket.objects.get_summary(user_id=request.user.id)
+        if request.method == "GET":
+            return Response(ticket_summary)
 
 
 class TicketStatusViewSet(ModelViewSet):
