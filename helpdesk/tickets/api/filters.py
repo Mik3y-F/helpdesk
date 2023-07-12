@@ -10,5 +10,7 @@ class TicketFilter(FilterSet):
             "title": ["icontains"],
             "description": ["icontains"],
             "created_at": ["date", "date__gt", "date__lt"],
-            "current_status": ["exact"],
         }
+
+    def current_status(self, queryset, name, value):
+        return queryset.filter(statuses__status=value)

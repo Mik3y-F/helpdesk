@@ -1,8 +1,11 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from ..models import Ticket, TicketStatus
+from .filters import TicketFilter
 from .pagination import DefaultPagination
 from .serializers import TicketSerializer, TicketStatusSerializer
 
@@ -14,6 +17,8 @@ class TicketViewSet(ModelViewSet):
 
     serializer_class = TicketSerializer
     queryset = Ticket.objects.prefetch_related("statuses").all()
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = TicketFilter
     pagination_class = DefaultPagination
 
     @action(detail=False, methods=["GET"])
